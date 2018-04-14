@@ -4,9 +4,13 @@ var path = require('path');
 var ejs = require("ejs");
 var bodyParser = require("body-parser");
 
+var mongoose = require("mongoose");
+var url = process.env.DATABASEURL || "mongodb://localhost/theta_tau"
+mongoose.connect(url);
+
 var passport        = require("passport"),
     LocalStrategy   = require("passport-local"),
-    methodOverride      = require("method-override"),
+    methodOverride  = require("method-override"),
     User            = require("./models/user"),
     flash           = require("connect-flash");
 
@@ -26,22 +30,23 @@ var app = express();
 app.use(bodyParser.urlencoded({extended : true}));
 app.use(bodyParser.json());
 app.use(methodOverride("_method"));
+app.use(flash());
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
+app.use(require("express-session")({
+    secret: "a secret message",
+    resave: false,
+    saveUninitialized: false
+}));
 app.use(express.static(__dirname + "/public"));
 app.use(passport.initialize());
 app.use(passport.session());
 passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
-app.use(require("express-session")({
-    secret: "a secret message",
-    resave: false,
-    saveUninitialized: false
-}));
 
 // pass currentUser into every page
 app.use(function(req, res, next) {
@@ -66,6 +71,56 @@ app.use('/finish', routerFinish);
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+
+
+// registrations
+var user1 = new User({username: 'team1'});
+User.register(user1, 'ok', function (err, user) {
+    if (err) {
+        console.log("error registering");
+    } else {
+        console.log("user1 registered");
+    }
+});
+
+var user2 = new User({username: 'team2'});
+User.register(user2, 'here', function (err, user) {
+    if (err) {
+        console.log("error registering");
+    } else {
+        console.log("user2 registered");
+    }
+});
+
+var user3 = new User({username: 'team3'});
+User.register(user3, 'we', function (err, user) {
+    if (err) {
+        console.log("error registering");
+    } else {
+        console.log("user3 registered");
+    }
+});
+
+var user4 = new User({username: 'team4'});
+User.register(user4, 'go', function (err, user) {
+    if (err) {
+        console.log("error registering");
+    } else {
+        console.log("user4 registered");
+    }
+});
+
+var root = new User({username: 'root'});
+User.register(root, 'admin', function (err, user) {
+    if (err) {
+        console.log("error registering");
+    } else {
+        console.log("root registered");
+    }
+});
+
+
+
 
 module.exports = app;
 

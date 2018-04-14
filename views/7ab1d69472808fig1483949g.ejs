@@ -1,5 +1,27 @@
 <% include header %>
+<script type="text/paperscript" canvas="myCanvas">
 
+        var circles = [];
+
+        function onKeyDown(event) {
+            if(keyData[event.key]){
+                var maxPoint = new Point(view.size.width, view.size.height);
+                var randomPoint = Point.random();
+                var point = maxPoint * randomPoint;
+                var newCircle = new Path.Circle(point, 500)
+                newCircle.fillColor = keyData[event.key].color;
+                keyData[event.key].sound.play();
+                circles.push(newCircle);
+            }
+        }
+
+        function onFrame(event){
+            for(var i = 0; i < circles.length; i++){
+                circles[i].fillColor.hue += 1;
+                circles[i].scale(.9);
+            }
+        }
+</script>
 <header class="bg-primary text-white">
     <div class="container text-center">
         <h1>The Game of Theta Tau: Season 2</h1>
@@ -14,15 +36,30 @@
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav ml-auto">
+                <% if (!currentUser) { %>
+                <li class="nav-item"><a class="nav-link js-scroll-trigger" href="/login">Login</a></li>
+                <% } else { %>
+                <li class="nav-item"><a class="nav-link js-scroll-trigger">Signed in as <strong><%= currentUser.username %></strong></a></li>
+                <% } %>
+            </ul>
+        </div>
     </div>
 </nav>
+<div class="container">
+    <div class="embed-responsive embed-responsive-16by9">
+        <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/RRKJiM9Njr8?autoplay=1" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+    </div>
+    <canvas class="my-3" id="myCanvas" resize></canvas>
+</div>
 
 <section id="p1" class="bg-light">
     <div class="container">
         <div class="row">
             <div class="col-lg-8 mx-auto container">
                 <h2>Problem 7</h2>
-                <p class="lead">I am the beginning of the end, and the end of time and space. I am essential to creation, and I surround every place. Who am I?</p>
+                <p class="lead">From 0:00 to 1:02</p>
                 <form action="/p8" method="POST">
                     <div class="form-group">
                         <input class="form-control" type="text" name="answer" placeholder="">

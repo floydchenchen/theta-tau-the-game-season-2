@@ -14,6 +14,15 @@
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav ml-auto">
+                <% if (!currentUser) { %>
+                <li class="nav-item"><a class="nav-link js-scroll-trigger" href="/login">Login</a></li>
+                <% } else { %>
+                <li class="nav-item"><a class="nav-link js-scroll-trigger">Signed in as <strong><%= currentUser.username %></strong></a></li>
+                <% } %>
+            </ul>
+        </div>
     </div>
 </nav>
 
@@ -22,8 +31,31 @@
         <div class="row">
             <div class="col-lg-8 mx-auto container">
                 <h2>Problem 6</h2>
-                <p class="lead">I am the beginning of the end, and the end of time and space. I am essential to creation, and I surround every place. Who am I?</p>
-                <form action="/p7" method="POST">
+                <ul>
+                    <li>Use an iphone and go to app store</li>
+                    <li>Search for "bottle flip!"</li>
+                    <li>download the one developed by "Arcade"</li>
+                    <li>start playing</li>
+                    <li>if you score greater or equal to 80 points, share your result to <strong>6515925261</strong>.</li>
+                    <li> Don't try to download a screenshot on google.</li>
+                    <li>If your shared result is accepted, you will get the password for the next problem automatically from that number.</li>
+                </ul>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <img class="img-fluid" src="https://raw.githubusercontent.com/floydchenchen/pictures/master/WechatIMG16.jpeg" alt="">
+                        </div>
+                        <div class="col-md-6">
+                            <img class="img-fluid" src="https://raw.githubusercontent.com/floydchenchen/pictures/master/WechatIMG17.jpeg" alt="">
+                        </div>
+                    </div>
+                    <ul class="my-3">
+                        <li>Click "SHARE"</li>
+                        <li>Click "Message" and send it to 6515925261. </li>
+                    </ul>
+                </div>
+
+                <form class="my-3" action="/p7" method="POST">
                     <div class="form-group">
                         <input class="form-control" type="text" name="answer" placeholder="">
                         <button type="submit" class="btn btn-primary mb-2 my-3">Submit Answer</button>

@@ -16,11 +16,14 @@ router.get("/login", function(req, res) {
 
 router.post("/login", passport.authenticate("local",
     {
-        successRedirect: "/campgrounds",
+        successRedirect: "/",
         failureRedirect: "/login"
     }), function(req, res) {
-
+    console.log("post login called");
 });
+// router.post("/login", function (req, res) {
+//    res.send("login logic here!");
+// });
 
 
 router.post('/p2', function (req, res) {
@@ -42,11 +45,19 @@ router.post('/p3', function (req, res) {
 
     var answer = req.body.answer;
     answer = answer.toLowerCase();
-    var expected = 'centennial';
-    console.log(answer);
-    console.log("id: " + req.param.id);
+    var expected = ['centennial', 'territorial', 'pioneer', 'frontier'];
+    var currentUser = req.user.username;
+    console.log("answer: " + answer);
+    console.log("currentUser: " + currentUser);
+    console.log("expected: " + expected[2]);
+    console.log(answer === expected[2]);
+    console.log(currentUser === 'team3');
 
-    if (answer === expected) {
+
+    if ((currentUser === 'team1' && answer === expected[0]) ||
+        (currentUser === 'team2' && answer === expected[1]) ||
+        (currentUser === 'team3' && answer === expected[2]) ||
+        (currentUser === 'team4' && answer === expected[3])) {
         res.redirect('3ab915ed94802400143a7631');
     } else {
         res.redirect('2ab1d69472808000148394c0');
@@ -83,9 +94,13 @@ router.post('/p6', function (req, res) {
 
     var answer = req.body.answer;
     answer = answer.toLowerCase();
-    var expected = '30';
+    var expected = ['30', 'general', 'free', 'spoiler: bama wins'];
+    var currentUser = req.user.username;
 
-    if (answer === expected) {
+    if ((currentUser === 'team1' && answer === expected[0]) ||
+        (currentUser === 'team2' && answer === expected[1]) ||
+        (currentUser === 'team3' && answer === expected[2]) ||
+        (currentUser === 'team4' && answer === expected[3])) {
         res.redirect('6ab1d694728082cz148394fa');
     } else {
         res.redirect('5ab1d69472af780014832wac');
@@ -128,6 +143,7 @@ router.post('/p9', function (req, res) {
     if (answer === expected) {
         res.redirect('9ab1d694728081s0148394ee');
     } else {
+        req.flash("error", "The answer is incorrect");
         res.redirect('8ab1e29472808f9014833rs0');
     }
 });

@@ -22,6 +22,11 @@
                 <li class="nav-item">
                     <a class="nav-link js-scroll-trigger" href="#author">Author</a>
                 </li>
+                <% if (!currentUser) { %>
+                <li class="nav-item"><a class="nav-link js-scroll-trigger" href="/login">Login</a></li>
+                <% } else { %>
+                <li class="nav-item"><a class="nav-link js-scroll-trigger">Signed in as <strong><%= currentUser.username %></strong></a></li>
+                <% } %>
             </ul>
         </div>
     </div>
@@ -41,9 +46,10 @@
                     <li>Only when you enter the correct answer to the question will you be redirected to the next question.</li>
                     <li>Each team need <a class="font-weight-bold">at least an iphone and a laptop with Chrome installed</a> to succeed. The system is not built for mobile devices.</li>
                     <li>Turn on your laptop's audio. A pair of ear buds are recommended in case it gets noisy but not required.</li>
-                    <li>The answer of each question contains mainly English characters(case-insensitive) and numbers, and possibly other characters(very uncommon).</li>
+                    <li>The answer of each question contains mainly English characters(case-sensitive, only <strong>lower-case</strong> characters are allowed) and numbers, and possibly other characters(very uncommon).</li>
                     <li>If the system does not accept your answer, you are wrong. Do not ask the game master unless you are using your hints.</li>
                     <li>The first team that solve all problems win.</li>
+                    <li>There are 9 Problems.</li>
                     <li>Have fun!</li>
                 </ul>
             </div>
@@ -63,8 +69,10 @@
     </div>
 </section>
 
+<% if (currentUser) { %>
 <div class="text-center">
     <a class="btn btn-primary my-3" href="/p1" role="button">Start the Game!</a>
 </div>
+<% } %>
 
 <% include footer %>

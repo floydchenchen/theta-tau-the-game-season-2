@@ -124,7 +124,7 @@ User.register(root, 'admin', function (err, user) {
 
 module.exports = app;
 
-var listener = app.listen(process.env.PORT || 3030, process.env.IP, function() {
+var listener = app.listen(process.env.PORT || 8000, process.env.IP, function() {
     console.log("Port number: " + listener.address.port);
     console.log("IP Address: " + listener.address.ip);
 });
